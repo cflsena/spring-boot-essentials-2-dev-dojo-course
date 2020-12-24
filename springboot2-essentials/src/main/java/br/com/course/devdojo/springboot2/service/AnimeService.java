@@ -14,7 +14,7 @@ public class AnimeService {
 
     private static List<Anime> animes;
     static {
-        animes = new ArrayList<>(List.of(new Anime(1L, "DBZ"), new Anime(2L, "Berserk")));
+        animes = new ArrayList<>(List.of(Anime.create(1L, "DBZ"), Anime.create(2L, "Berserk")));
     }
 
     public List<Anime> listAll() {
