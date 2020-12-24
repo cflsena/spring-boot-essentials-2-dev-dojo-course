@@ -1,6 +1,7 @@
 package br.com.course.devdojo.springboot2.domain;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -10,6 +11,7 @@ import javax.persistence.*;
 @AllArgsConstructor(staticName = "create")
 @NoArgsConstructor(staticName = "create")
 @Entity
+@Builder
 public class Anime {
 
     @Id

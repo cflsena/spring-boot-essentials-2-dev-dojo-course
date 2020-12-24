@@ -1,6 +1,8 @@
 package br.com.course.devdojo.springboot2.controller;
 
 import br.com.course.devdojo.springboot2.domain.Anime;
+import br.com.course.devdojo.springboot2.request.AnimePostRequestBody;
+import br.com.course.devdojo.springboot2.request.AnimePutRequestBody;
 import br.com.course.devdojo.springboot2.service.AnimeService;
 import br.com.course.devdojo.springboot2.util.DateUtil;
 import lombok.RequiredArgsConstructor;
@@ -22,20 +24,24 @@ public class AnimeController {
     private final AnimeService animeService;
 
     @GetMapping
-    public ResponseEntity<List<Anime>> list(){
+    public ResponseEntity<List<Anime>> list() {
         log.info(dateUtil.formatLocalDateTimeToDatabaseStyle(LocalDateTime.now()));
         return ResponseEntity.ok(animeService.listAll());
     }
 
     @GetMapping(path = "/{id}")
     public ResponseEntity<Anime> findById(@PathVariable Long id) {
-        log.info(dateUtil.formatLocalDateTimeToDatabaseStyle(LocalDateTime.now()));
-        return ResponseEntity.ok(animeService.findById(id));
+        return ResponseEntity.ok(animeService.findByIdOrThrowBadRequestException(id));
+    }
+
+    @GetMapping(path = "/find")
+    public ResponseEntity<List<Anime>> findByName(@RequestParam String name) {
+        return ResponseEntity.ok(animeService.finaByName(name));
     }
 
     @PostMapping
-    public ResponseEntity<Anime> save(@RequestBody Anime anime) {
-        return new ResponseEntity<>(animeService.save(anime), HttpStatus.CREATED);
+    public ResponseEntity<Anime> save(@RequestBody AnimePostRequestBody animePostRequestBody) {
+        return new ResponseEntity<>(animeService.save(animePostRequestBody), HttpStatus.CREATED);
     }
 
     @DeleteMapping(path = "/{id}")
@@ -46,8 +52,8 @@ public class AnimeController {
 
     @PutMapping
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void replace(@RequestBody Anime anime) {
-        animeService.replace(anime);
+    public void replace(@RequestBody AnimePutRequestBody animePutRequestBody) {
+        animeService.replace(animePutRequestBody);
     }
 
 }
