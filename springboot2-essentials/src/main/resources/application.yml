@@ -1,6 +1,6 @@
 server:
   error:
-      include-stacktrace: never
+      include-stacktrace: on_param
 
 spring:
   datasource:
@@ -12,4 +12,9 @@ spring:
       database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
       hibernate:
         ddl-auto: update
-      show-sql: true
+
+logging:
+  level:
+    org:
+      hibernate:
+        SQL: DEBUG
