@@ -1,7 +1,7 @@
 package br.com.course.devdojo.springboot2.repository;
 
 import br.com.course.devdojo.springboot2.domain.Anime;
-import lombok.extern.log4j.Log4j2;
+import br.com.course.devdojo.springboot2.util.AnimeCreator;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -23,7 +23,7 @@ class AnimeRepositoryTest {
     @DisplayName("Save persists anime when Successful")
     void save_PersistAnime_WhenSuccessful() {
 
-        Anime animeToBeSaved = createAnime();
+        Anime animeToBeSaved = AnimeCreator.createAnimeToBeSaved();
 
         Anime animeSaved = this.animeRepository.save(animeToBeSaved);
 
@@ -38,7 +38,7 @@ class AnimeRepositoryTest {
     @DisplayName("Save updates anime when Successful")
     void save_UpdatesAnime_WhenSuccessful() {
 
-        Anime animeToBeSaved = createAnime();
+        Anime animeToBeSaved = AnimeCreator.createAnimeToBeSaved();
 
         Anime animeSaved = this.animeRepository.save(animeToBeSaved);
 
@@ -57,7 +57,7 @@ class AnimeRepositoryTest {
     @DisplayName("Delete removes anime when Successful")
     void delete_RemovesAnime_WhenSuccessful() {
 
-        Anime animeToBeSaved = createAnime();
+        Anime animeToBeSaved = AnimeCreator.createAnimeToBeSaved();
 
         Anime animeSaved = this.animeRepository.save(animeToBeSaved);
 
@@ -75,7 +75,7 @@ class AnimeRepositoryTest {
     @DisplayName("Find By Name returns list of anime when Successful")
     void findByName_ReturnsListOfAnime_WhenSuccessful() {
 
-        Anime animeToBeSaved = createAnime();
+        Anime animeToBeSaved = AnimeCreator.createAnimeToBeSaved();
 
         Anime animeSaved = this.animeRepository.save(animeToBeSaved);
 
@@ -103,6 +103,7 @@ class AnimeRepositoryTest {
     @DisplayName("Save throw ConstraintViolationException when anime is empty")
     void save_ThrowConstraintViolationException_WhenNameIsEmpty() {
 
+        // Ambos funcionam
         Anime animeToBeSaved = Anime.create();
 
 //        Assertions.assertThatThrownBy(() -> this.animeRepository.save(animeToBeSaved))
@@ -113,11 +114,4 @@ class AnimeRepositoryTest {
                 .withMessageContaining("The anime name cannot be empty");
 
     }
-
-    private Anime createAnime() {
-        return Anime.builder()
-                .name("Hajime no Ippo")
-                .build();
-    }
-
 }
